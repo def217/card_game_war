@@ -54,7 +54,7 @@ class Game:
         card2 = self.player2.play_card()
         if not card1 or not card2:
             return False
-
+        
         print(f"{self.player1.name} plays {card1}, {self.player2.name} plays {card2}")
 
         if card1.value > card2.value:
@@ -65,12 +65,29 @@ class Game:
             self.player2.add_cards([card1, card2])
         else:
             print("War!")
-            # self.handle_war([card1, card2])
+            self.handle_war([card1, card2])
 
         return True
     
     def handle_war(self, war_pile):
-        ...
+        cards1 = [self.player1.play_card() for _ in range(4) if self.player1.has_cards()]
+        cards2 = [self.player2.play_card() for _ in range(4) if self.player2.has_cards()]
+        
+        war_pile.extend(cards1 + cards2)
+        
+        if not cards1 or not cards2:
+            print("Game over.")
+            return
+        
+        if cards1[-1].value > cards2[-1].value:
+            print(f"{self.player1.name} has won!")
+            self.player1.add_cards(war_pile)
+        elif cards1[-1].value < cards2[-1].value:
+            print(f"{self.player2.name} has won!")
+            self.player2.add_cards(war_pile)
+        else:
+            print("War again!")
+            self.handle_war(war_pile)
         
     def play_game(self):
         round_count = 0
