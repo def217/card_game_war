@@ -53,7 +53,7 @@ class Game:
         card1 = self.player1.play_card()
         card2 = self.player2.play_card()
         if not card1 or not card2:
-            return False  # Game over
+            return False
 
         print(f"{self.player1.name} plays {card1}, {self.player2.name} plays {card2}")
 
